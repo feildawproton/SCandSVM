@@ -125,3 +125,155 @@ This algorithm uses an alternating minimization:
 2
 2
 (1)
+
+Subject to
+||𝐷
+𝑗
+||
+2
+2
+= 1 (2)
+|(|𝑠^𝑖 |)|0 ≤ 𝑘 (3)
+Where D is the dictionary and subject using
+normalized dictionary elements (2). s is the
+dictionary and is subject to having no more than
+k non-zeros (3). For a single input x(i) from our
+patches, s(i) starts at 0, then the algorithm
+selects an element of s(i) to be non-zero, and
+then S(i) is update to minimize (1).
+
+2.3.3 Sparse Coding
+This is similar to OMP but the optimization
+function is:
+𝑚𝑖𝑛
+𝐷,𝑠(𝑖)
+∑ ||𝐷𝑠
+𝑖 − 𝑥
+𝑖
+||
+2
+2
++ 𝜆||𝑠
+𝑖
+||1 (4)
+
+Subject to the constraint (2).
+It should be noted that the reference paper
+(Coates et al) also uses Sparse RBMS, Sparse
+auto-encoders, and Random Weights for
+dictionary training.
+### 2.4 Feature Extraction
+After the dictionary is created we need to
+extract features from a new input vector of all
+the patches. We are projecting all the image
+patches x onto the dictionary D (that was
+created with a subset of x) in order to create
+the vector of features f.
+In these experiments each choice of encoder
+was paired with each training algorithm. We
+used two encoding algorithms for feature
+extraction: Sparse Coding and Soft Threshold
+#### 2.4.1 Sparse Coding
+Here we minimize (4) with D fixed and solving
+for s. The positive and negative portions of s
+are split into separate features:
+𝑗 = max{0, 𝑠}
+𝑓𝑗+𝑑 = max{0, −𝑠}
+(5)
+
+#### 2.4.2 Soft Threshold
+Here the features are split via:
+𝑓𝑗 = max{0,𝐷
+(𝑗)𝑇𝑥 − 𝛼}
+𝑓𝑗+𝑑 = max{0, −𝐷
+(𝑗)𝑇𝑥 − 𝛼}
+It should be noted that the reference paper also
+used OMP and a “Natural” encoding.
+### 2.5 SVM Training
+After features f are extracted a support vector
+machine (SVM) is then trained on these feature.
+“minFunc” is used here. When the directional
+derivative is below or the change in the
+functional value is lower than a user supplied
+constant the SVM stops training and reports
+training accuracy.
+### 2.6 Testing
+After SVM training, the testing data is
+concatenated and features are extracted with
+the specified encoder. Testing accuracy is then
+reported out.
+## 3 Experiments
+### 3.1 Patches
+In the reference paper during dictionary
+training, 400,000 patches were used for OMP,
+500,000 for Sparse Coding, and 50,000 for
+random patches. In these experiments the
+number of patches was reduced by one order of
+magnitude to 40,000, 50,000, and 5,000
+respectively. This was originally done to speed
+up testing, but due to the consistency of results
+these values were retained
+### 3.2 Training Iterations
+The number of training iterations was kept the
+same as the reference work. Namely 50
+iterations for OMP and 10 iterations for Sparse
+Coding.
+### 3.3 Dictionary Size
+In these experiments the dictionary size was
+varied for every combination of dictionary
+training and encoder. The dictionary sizes used
+were 100, 300, and 1000.
+### 3.4 Training and Encoder Combinations
+Every combination of the three training
+algorithms and two encoding algorithms was
+used in this experimental design. This gives a
+3x2x3 experiment:
+Table 1: Experimental Design
+Testing Accuracy
+Encoder
+Dictionary
+Training
+Soft
+Threshold
+Sparse
+Coding Size
+OMP VQ
+Test
+Accuracy
+Test
+Accuracy 100
+Test
+Accuracy
+Test
+Accuracy 300
+Test
+Accuracy
+Test
+Accuracy 1000
+Random
+Test
+Accuracy
+Test
+Accuracy 100
+Test
+Accuracy
+Test
+Accuracy 300
+Test
+Accuracy
+Test
+Accuracy 1000
+Sparse
+Coding
+Test
+Accuracy
+Test
+Accuracy 100
+Test
+Accuracy
+Test
+Accuracy 300
+Test
+Accuracy
+Test
+Accuracy 1000
