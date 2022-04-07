@@ -277,3 +277,142 @@ Test
 Accuracy
 Test
 Accuracy 1000
+
+### 3.5 Skin Cancer Data Set
+The Skin_Cancer data set consists of 288 color
+images. There are two classes of images:
+“Cancer” and “Non_Cancer”. There are 204
+images of Non_Cancer and 84 Cancer Images.
+These images were all resized to 100x100 pixels
+and converted to grayscale (100x100x1). These
+images are sensitive so no samples are shown
+here.
+### 3.6 Trial Depth Images
+The author also wanted to check the feasibility
+of depth image classification so a trial sample of
+images was used. These images are not
+validated for uniqueness. However, they are of
+interest to the author and are provided here
+along with results for the reader’s interest.
+There are five image types: human facing away
+from the camera performing a shoulder test
+(Back), human facing the camera (Forward),
+human performing a leg raise (LegRaise),
+human performing a pushup (PushUP), and
+human performing a rotary stability task
+(Rotary). There are 157 Back images, 144
+Forward images, 146 LegRaise images, 140
+PushUp images, and 145 Rotary images. Here
+are some examples (resized to 100x100 pixels):
+Figure 1: Back
+Figure 2: Forward
+Figure 3: LegRaise
+Figure 4: PushUp
+Figure 5: Rotary
+## 4 Results
+All training results were above 95% when SVM
+training was concluded because either the
+directional derivative was below threshold or
+the change in function value was less than
+threshold. Therefore, training accuracy is not
+reported here, though they are recorded in the
+supplemental documents.
+### 4.1 Skin Cancer Testing Accuracy
+Testing accuracy results for the Skin Cancer data
+is shown in the table below.
+Table 2: Testing Accuracy for the Skin Cancer Data
+Skin Cancer Data Testing Accuracy
+Encoder
+Dictionary
+Training
+Soft
+Threshold
+Sparse
+Coding
+Dictionary
+Size
+OMP VQ,
+40000
+Patches, 50
+Iterations
+68.75 72.91667 100
+75 72.91667 300
+75 77.08333 1000
+Random,
+5000
+Iterations
+83.33333 79.16667 100
+79.16667 79.16667 300
+81.25 81.25 1000
+Sparse
+Coding,
+50000
+Patches, 10
+Iterations
+83.33333 77.08333 100
+83.33333 75 300
+81.25 75 1000
+Figure 6: Each Combination's Accuracy over Dictionary Size
+Figure 7: Just Training Algorithm Accuracy over Dictionary
+Size
+Figure 8: Just Encoding Algorithm Accuracy over Dictionary
+Size
+### 4.2 Trial Depth Image Testing Accuracy
+All combinations of training algorithm, encoder,
+and dictionary size achieved the same testing
+accuracy of 100%. This suggests that the data
+set was not broad enough and/or we are not
+near the lower limit of patches or dictionary
+size.
+## 5 Conclusions
+Unless specified the conclusions reached here
+are based on the results from the skin cancer
+data. 
+All testing accuracy results were close. At a
+dictionary size of only 100 the combination of
+Random Patches and Soft Threshold performed
+better or just as good as any other combination.
+Only the OMP Training algorithm showed
+marked improvements with the increase in
+dictionary size for the Skin Cancer Data. Soft
+Threshold encoding outperformed Sparse
+Coding. Also, the random patches training
+algorithm outperformed or performed as well
+as any other algorithm.
+The combination and Sparse Coding Training
+and Soft Threshold encoding performed as well
+as or better than any other combination.
+However it was matched by or followed closely
+by Random Patches and Soft Threshold. The
+interesting result from this experiment is that
+the skin cancer images, less expensive training
+and encoding algorithms with smaller dictionary
+sizes performed just as well or better than
+sparse coding.
+The results for the depth image classification
+has encouraged the author to run more
+experiments in the lab where he works. The
+reason the author would like to be able to
+classify these images is because the commercial
+sensor and library (Microsoft Kinect) he uses
+was only trained on individuals facing the
+camera. The author needs to be able to detect
+individuals on the ground and facing away from
+the camera while performing different physical
+tasks.
+## References
+Coates, A., Ng, A., “The Importance of Encoding
+Versus Training with Sparse Coding and
+Vector Quantization” Proceedings of the
+28th Annual Conference on Machine
+Learning 2011
+Krizhevsky, A. “learning Multiple Layers of
+Features from Tiny Images” 2009
+Mairal, J., Bach, F., Ponce, J. “Sparse Modeling
+for Image and Vision Processing”
+Foundations and Trends in Computer
+Graphics and Vision Vol. 8 No. 2-3
+(2012) 85-283
+Schmidt, Mark “minFunc”
+http://www.cs.ubc.ca/~schmidtm/Soft
+ware/minFunc.html
